@@ -9,26 +9,66 @@ typedef struct Node{
 Node * head = NULL;
 
 Node* CreateNode(int value);
-void InsertAtEnd(int value);
+void InsertAtBeginning(int value);
 void InsertAtEnd(int value);
 void ShowList();
+Node* SearchNode(int value_seeked);
 
 int main(){
-   int valor;
-   int controller = 1;
+   int choice;
+    int data;
+    Node *foundNode;
 
-   while (controller != 0){
-        printf("Insira um valor para adicionar a lista. Para sair digite [0]");
-        scanf("%d", &valor);
+    do {
+        // --- Menu de Opções ---
+        printf("\n--- Gerenciamento de Lista Encadeada ---\n");
+        printf("1. Inserir no inicio\n");
+        printf("2. Inserir no fim\n");
+        printf("3. Procurar um no\n");
+        printf("4. Apagar um no\n");
+        printf("5. Listar todos os nos\n");
+        printf("0. Sair\n");
+        printf("Escolha uma opcao: ");
+        scanf("%d", &choice);
 
-        if (valor == 0){
-            break;
+        switch (choice) {
+            case 1:
+                printf("Digite o valor para inserir no inicio: ");
+                scanf("%d", &data);
+                InsertAtBeginning(data);
+                break;
+            case 2:
+                printf("Digite o valor para inserir no fim: ");
+                scanf("%d", &data);
+                InsertAtEnd(data);
+                break;
+            case 3:
+                printf("Digite o valor do no a procurar: ");
+                scanf("%d", &data);
+                foundNode = SearchNode(data);
+                if (foundNode != NULL) {
+                    printf("No com valor %d encontrado no endereco de memoria %p.\n", data, (void*)foundNode);
+                } else {
+                    printf("No com valor %d nao encontrado na lista.\n", data);
+                }
+                break;
+            case 4:
+                printf("Digite o valor do no a apagar: ");
+                scanf("%d", &data);
+                // deleteNode(data);
+                break;
+            case 5:
+                ShowList();
+                break;
+            case 0:
+                printf("Saindo do programa. Liberando memoria...\n");
+                break;
+            default:
+                printf("Opcao invalida. Tente novamente.\n");
         }
+    } while (choice != 0);
 
-        
-
-    }
-
+    // clearList(); 
     return 0;
 }
 
@@ -90,3 +130,13 @@ void ShowList(){
 
     printf("[%d] --> NULL\n", auxiliar->info);
 };
+
+Node* SearchNode(int value_seeked){
+    Node * value_found = head;
+
+    while (value_found != NULL && value_found->info != value_seeked){
+        value_found = value_found->nextNode;
+    }
+
+    return value_found;
+}
