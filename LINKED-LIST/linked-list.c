@@ -13,14 +13,15 @@ void InsertAtBeginning(int value);
 void InsertAtEnd(int value);
 void ShowList();
 Node* SearchNode(int value_seeked);
+void DeleteNode(int node_to_delete);
+void ClearList();
 
 int main(){
-   int choice;
+    int choice;
     int data;
     Node *foundNode;
 
     do {
-        // --- Menu de Opções ---
         printf("\n--- Gerenciamento de Lista Encadeada ---\n");
         printf("1. Inserir no inicio\n");
         printf("2. Inserir no fim\n");
@@ -55,7 +56,7 @@ int main(){
             case 4:
                 printf("Digite o valor do no a apagar: ");
                 scanf("%d", &data);
-                // deleteNode(data);
+                DeleteNode(data);
                 break;
             case 5:
                 ShowList();
@@ -68,7 +69,7 @@ int main(){
         }
     } while (choice != 0);
 
-    // clearList(); 
+    ClearList(); 
     return 0;
 }
 
@@ -132,11 +133,48 @@ void ShowList(){
 };
 
 Node* SearchNode(int value_seeked){
-    Node * value_found = head;
+    Node * current_node = head;
 
-    while (value_found != NULL && value_found->info != value_seeked){
-        value_found = value_found->nextNode;
+    while (current_node != NULL && current_node->info != value_seeked){
+        current_node = current_node->nextNode;
     }
 
-    return value_found;
+    return current_node;
+};
+
+void DeleteNode(int node_to_delete){
+    Node * current_node = head;
+    Node * previous_node;
+
+    while (current_node != NULL && current_node->info != node_to_delete){
+        previous_node = current_node;
+        current_node = current_node->nextNode;
+    }
+
+    if (current_node == NULL){
+        return;
+    }
+
+    if (current_node == head){
+        head = current_node->nextNode;
+    } else {
+        previous_node->nextNode = current_node->nextNode;
+    }
+
+    free(current_node);
+};
+
+void ClearList(){
+    Node * current_node = head;
+    Node * next_node;
+
+    while (current_node != NULL){
+        next_node = current_node->nextNode;
+        free(current_node);
+        current_node = next_node;
+    }
+
+    head = NULL;
+
+    return;
 }
