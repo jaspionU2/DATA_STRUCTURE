@@ -20,6 +20,9 @@ int main(){
     InsertInTree(30, &root);
     InsertInTree(30, &root);
     SearchInList(5, &root);
+
+
+
     
 
     return 0;
@@ -67,8 +70,9 @@ BinaryTree* SearchInList(int data_searched, BinaryTree ** current_node){
     }
 
     if (data_searched < (*current_node)->data){
-        SearchInList(data_searched, &((*current_node)->left_node));
+       return SearchInList(data_searched, &((*current_node)->left_node));
     } else {
-        SearchInList(data_searched, &((*current_node)->right_node));
+       return SearchInList(data_searched, &((*current_node)->right_node));
     }
 }
+
