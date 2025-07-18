@@ -24,22 +24,25 @@ BinaryTree* CreateNode(int data){
 };
 
 BinaryTree* InsertInTree(int data, BinaryTree ** current_node){ 
-    BinaryTree * node = CreateNode(data);
-
-    if (root == NULL){
-        root = node;
+    if (*current_node == NULL){
+        *current_node = CreateNode(data);
         return;
     }
 
-    if (data < (*current_node)->data && (*current_node)->left_node == NULL){
-        (*current_node)->left_node = node;
-        return current_node;
+    if (data < (*current_node)->data){
+        if ((*current_node)->left_node == NULL){
+            (*current_node)->left_node = CreateNode(data);
+            return *current_node;
+        }
+        (*current_node)->left_node = InsertInTree(data, &((*current_node)->left_node));
+        return *current_node;
+    } else if (data > (*current_node)->data) {
+         if ((*current_node)->right_node == NULL){
+            (*current_node)->right_node = CreateNode(data);
+            return *current_node;
+        }
+        (*current_node)->right_node = InsertInTree(data, &((*current_node)->right_node));
+        return *current_node;
     }
-    if (data > (*current_node)->data && (*current_node)->right_node == NULL){
-       (*current_node)->right_node = node;
-       return current_node;
-    }
-
-    InsertInTree(data, current_node);
-    return;
+    
 }
