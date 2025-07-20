@@ -7,23 +7,25 @@ typedef struct BinaryTree{
     struct BinaryTree * right_node;
 } BinaryTree;
 
-BinaryTree* root = NULL;
+BinaryTree* _root = NULL;
 
 BinaryTree* CreateNode(int data);
 void InsertInTree(int data, BinaryTree ** current_node);
 BinaryTree* SearchInList(int data_searched, BinaryTree ** current_node);
+void ShowList(BinaryTree * current_node, int level_identation);
+void DeleteNode(BinaryTree ** current_node, int node_to_delete);
 
 int main(){
-    InsertInTree(20, &root);
-    InsertInTree(10, &root);
-    InsertInTree(5, &root);
-    InsertInTree(30, &root);
-    InsertInTree(30, &root);
-    SearchInList(5, &root);
+    InsertInTree(20, &_root);
+    InsertInTree(10, &_root);
+    InsertInTree(15, &_root);
+    InsertInTree(5, &_root);
+    InsertInTree(30, &_root);
+    InsertInTree(30, &_root);
+    ShowList(_root, 0);
+    DeleteNode(&_root, 15);
+    ShowList(_root, 0);
 
-
-
-    
 
     return 0;
 }
@@ -76,3 +78,22 @@ BinaryTree* SearchInList(int data_searched, BinaryTree ** current_node){
     }
 }
 
+void ShowList(BinaryTree * current_node, int level_identation){
+    if (current_node == NULL){
+        return;
+    }
+
+    ShowList(current_node->right_node, level_identation + 1);
+
+    for (int i = 0; i < level_identation; i++){ 
+        printf("    ");
+    }
+
+    printf("--> %d\n", current_node->data);
+
+    ShowList(current_node->left_node, level_identation + 1);
+}
+
+void DeleteNode(BinaryTree ** current_node, int node_to_delete){
+    
+}
